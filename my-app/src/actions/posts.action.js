@@ -7,7 +7,7 @@ export default {
     try {
       const response = await PostAPIServices.getAllPosts();
       const { data } = response;
-      const payload = _.get(data, "_entity", []);
+      const payload = data;
 
       dispatch({
         type: constants.FETCH_ALL_POSTS,

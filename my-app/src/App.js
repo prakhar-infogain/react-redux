@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import store from "./store";
+import { Provider } from "react-redux";
 import AllPostsComponent from './components/AllPostsComponent';
 import {
   Container,
@@ -11,7 +12,10 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <AllPostsComponent />
+      <Provider store={store}>
+        <AllPostsComponent />
+      </Provider>
+      
     );
   }
 }

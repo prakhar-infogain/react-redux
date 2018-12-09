@@ -1,18 +1,30 @@
 import React, { Component } from "react";
+import AllPostsListAction from "../actions/posts.action.js";
+import Proptypes from "prop-types";
+import { connect } from "react-redux";
 import "./style.css";
 import {
     MDBRow,
     MDBCol,
     MDBCard,
     MDBCardBody,
-    MDBMask,
-    MDBIcon,
-    MDBView,
-    MDBBtn
+    MDBIcon
 } from "mdbreact";
 
 class MainContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+        const { getAllPosts } = this.props;
+        getAllPosts();
+    }
+
     render() {
+        const { AllPostsList } = this.props;
+        console.log("Inside render function", AllPostsList);
         return(
         <div id="wrapper">
             <MDBCard className="px-5 pb-5">
@@ -26,135 +38,26 @@ class MainContainer extends Component {
                 cupidatat non proident, sunt in culpa qui officia deserunt mollit
                 anim id est laborum.
                 </p>
-                <MDBRow>
-                <MDBCol lg="5">
-                    <MDBView className="rounded z-depth-2 mb-lg-0 mb-4" hover waves>
-                    <img
-                        className="img-fluid"
-                        src="https://mdbootstrap.com/img/Photos/Others/img%20(27).jpg"
-                        alt=""
-                    />
-                    <a href="#!">
-                        <MDBMask overlay="white-slight" />
-                    </a>
-                    </MDBView>
-                </MDBCol>
-                <MDBCol lg="7">
-                    <a href="#!" className="green-text">
-                    <h6 className="font-weight-bold mb-3">
-                        <MDBIcon icon="cutlery" className="pr-2" />
-                        Food
-                    </h6>
-                    </a>
-                    <h3 className="font-weight-bold mb-3 p-0">
-                    <strong>Title of the news</strong>
-                    </h3>
-                    <p>
-                    Nam libero tempore, cum soluta nobis est eligendi optio cumque
-                    nihil impedit quo minus id quod maxime placeat facere possimus,
-                    omnis voluptas assumenda est, omnis dolor repellendus et aut
-                    officiis debitis.
-                    </p>
-                    <p>
-                    by
-                    <a href="#!">
-                        <strong>Carine Fox</strong>
-                    </a>
-                    , 19/08/2018
-                    </p>
-                    <MDBBtn color="success" size="md" className="waves-light ">
-                    Read more
-                    </MDBBtn>
-                </MDBCol>
-                </MDBRow>
-                <hr className="my-5" />
-                <MDBRow>
-                <MDBCol lg="7">
-                    <a href="#!" className="pink-text">
-                    <h6 className="font-weight-bold mb-3">
-                        <MDBIcon icon="image" className="pr-2" />
-                        Lifestyle
-                    </h6>
-                    </a>
-                    <h3 className="font-weight-bold mb-3 p-0">
-                    <strong>Title of the news</strong>
-                    </h3>
-                    <p>
-                    At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                    blanditiis praesentium voluptatum deleniti atque corrupti quos
-                    dolores et quas molestias excepturi sint occaecati cupiditate
-                    non provident.
-                    </p>
-                    <p>
-                    by
-                    <a href="#!">
-                        <strong>Carine Fox</strong>
-                    </a>
-                    , 14/08/2018
-                    </p>
-                    <MDBBtn
-                    color="pink"
-                    size="md"
-                    className="mb-lg-0 mb-4 waves-light"
-                    >
-                    Read more
-                    </MDBBtn>
-                </MDBCol>
-                <MDBCol lg="5">
-                    <MDBView className="rounded z-depth-2 mb-lg-0 mb-4" hover waves>
-                    <img
-                        className="img-fluid"
-                        src="https://mdbootstrap.com/img/Photos/Others/img%20(34).jpg"
-                        alt=""
-                    />
-                    <a href="#!">
-                        <MDBMask overlay="white-slight" />
-                    </a>
-                    </MDBView>
-                </MDBCol>
-                </MDBRow>
-                <hr className="my-5" />
-                <MDBRow>
-                <MDBCol lg="5">
-                    <MDBView className="rounded z-depth-2 mb-lg-0 mb-4" hover waves>
-                    <img
-                        className="img-fluid"
-                        src="https://mdbootstrap.com/img/Photos/Others/img (28).jpg"
-                        alt=""
-                    />
-                    <a href="#!">
-                        <MDBMask overlay="white-slight" />
-                    </a>
-                    </MDBView>
-                </MDBCol>
-                <MDBCol lg="7">
-                    <a href="#!" className="indigo-text">
-                    <h6 className="font-weight-bold mb-3">
-                        <MDBIcon icon="suitcase" className="pr-2" />
-                        Food
-                    </h6>
-                    </a>
-                    <h3 className="font-weight-bold mb-3 p-0">
-                    <strong>Title of the news</strong>
-                    </h3>
-                    <p>
-                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-                    aut fugit, sed quia consequuntur magni dolores eos qui ratione
-                    voluptatem sequi nesciunt. Neque porro qui dolorem ipsum quia
-                    sit amet.
-                    </p>
-                    <p>
-                    by
-                    <a href="#!">
-                        <strong>Carine Fox</strong>
-                    </a>
-                    , 11/08/2018
-                    </p>
-                    <MDBBtn color="indigo" size="md" className="waves-light ">
-                    Read more
-                    </MDBBtn>
-                </MDBCol>
-                </MDBRow>
+                {AllPostsList.map((post) => 
+                    <MDBRow>
+                    <MDBCol lg="12">
+                        <a href="#!" className="green-text">
+                        <h6 className="font-weight-bold mb-3">
+                            <MDBIcon icon="cutlery" className="pr-2" />
+                            Food
+                        </h6>
+                        </a>
+                        <h3 className="font-weight-bold mb-3 p-0">
+                        <strong>{post.title}</strong>
+                        </h3>
+                        <p>
+                        {post.body}
+                        </p>
+                    </MDBCol>
+                    </MDBRow>
+                )
+                }
+                
             </MDBCardBody>
             </MDBCard>
         </div>
@@ -162,4 +65,18 @@ class MainContainer extends Component {
     }
 }
 
-export default MainContainer;
+const stateToProps = state => ({
+    AllPostsList: state.postsReducer.postsList,
+});
+
+const dispatchToProps = dispatch => ({
+    getAllPosts: () => {
+        dispatch(AllPostsListAction.getAllPosts());
+    }
+});
+
+MainContainer.propTypes = {
+    getAllPosts : Proptypes.func.isRequired 
+}
+
+export default connect(stateToProps, dispatchToProps)(MainContainer);
